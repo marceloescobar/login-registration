@@ -1,5 +1,6 @@
 package com.mescobar.registration.service;
 
+import java.util.Optional;
 import com.mescobar.registration.dto.UserDTO;
 import com.mescobar.registration.exception.UserAlreadyExistException;
 import com.mescobar.registration.persistence.model.User;
@@ -20,6 +21,12 @@ public interface UserService {
   void createPasswordResetTokenForUser(User user, String token);
 
   User findUserByEmail(final String email);
-  
-  void changeUserPassword(User user, String password) ;
+
+  void changeUserPassword(User user, String password);
+
+  void createVerificationTokenForUser(final User user, final String token);
+
+
+  Optional<User> getUserByPasswordResetToken(final String token);
+
 }

@@ -1,5 +1,7 @@
 package com.mescobar.registration.dto;
 
+import com.mescobar.registration.validation.ValidPassword;
+
 public class PasswordDTO {
   private String oldPassword;
 

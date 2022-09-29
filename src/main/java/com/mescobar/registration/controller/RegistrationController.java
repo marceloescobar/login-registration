@@ -21,6 +21,7 @@ import com.mescobar.registration.event.OnRegistrationCompleteEvent;
 import com.mescobar.registration.exception.UserAlreadyExistException;
 import com.mescobar.registration.persistence.model.User;
 import com.mescobar.registration.persistence.model.VerificationToken;
+import com.mescobar.registration.service.SecurityUserService;
 import com.mescobar.registration.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 

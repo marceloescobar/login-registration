@@ -10,6 +10,7 @@ import com.mescobar.registration.dto.PasswordDTO;
 import com.mescobar.registration.dto.UserDTO;
 import com.mescobar.registration.event.OnRegistrationCompleteEvent;
 import com.mescobar.registration.persistence.model.User;
+import com.mescobar.registration.service.CaptchaService;
 import com.mescobar.registration.service.SecurityUserService;
 import com.mescobar.registration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class RegistrationRestController {
 
   @Autowired
   private JavaMailSender mailSender;
+  
+  @Autowired
+  private CaptchaService captchaService;
 
 
   @Autowired
@@ -60,6 +64,26 @@ public class RegistrationRestController {
       
       return new GenericResponse("success");
   }
+  
+  // Registration
+  @PostMapping("/user/registrationCaptcha")
+  public GenericResponse captchaRegisterUserAccount(@Valid final UserDTO accountDto, final HttpServletRequest request) {
+
+      final String response = request.getParameter("g-recaptcha-response");
+      captchaService.processResponse(response);
+
+      return registerNewUserHandler(accountDto, request);
+  }
+  
+  private GenericResponse registerNewUserHandler(final UserDTO accountDto, final HttpServletRequest request) {
+    log.debug("Registering user account with information: {}", accountDto);
+
+    final User registered = userService.registerNewUserAccount(accountDto);
+    eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+    return new GenericResponse("success");
+}
+  
+  
   
   // Reset password
   @PostMapping("/user/resetPassword")
