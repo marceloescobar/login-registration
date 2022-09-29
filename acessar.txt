@@ -1,0 +1,2 @@
+https://www.baeldung.com/spring-security-registration-verification-email
+https://github.com/Baeldung/spring-security-registration/tree/d2fd3390d7c05605ffbbbbd773be9b5313ec9fca/src/main/resources/templates
